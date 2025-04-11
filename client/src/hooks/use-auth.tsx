@@ -45,7 +45,14 @@ const registrationSchema = insertUserSchema.extend({
 
 type RegisterData = z.infer<typeof registrationSchema>;
 
-export const AuthContext = createContext<AuthContextType | null>(null);
+export const AuthContext = createContext<AuthContextType>({
+  user: null,
+  isLoading: false,
+  error: null,
+  loginMutation: {} as UseMutationResult<UserWithoutPassword, Error, LoginData>,
+  logoutMutation: {} as UseMutationResult<void, Error, void>,  
+  registerMutation: {} as UseMutationResult<UserWithoutPassword, Error, RegisterData>
+});
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const { toast } = useToast();

@@ -82,8 +82,13 @@ export default function AuthPage() {
     loginMutation.mutate(data);
   };
 
-  const onRegisterSubmit = (data: RegisterFormValues) => {
-    registerMutation.mutate(data);
+  const onRegisterSubmit = async (data: RegisterFormValues) => {
+    await registerMutation.mutateAsync(data);
+    if (data.preferredLanguage) {
+      await apiRequest("PATCH", "/api/user/settings", {
+        preferredLanguage: data.preferredLanguage
+      });
+    }
   };
 
   if (isLoading) {
