@@ -129,7 +129,30 @@ export function OnboardingProvider({ children }: { children: ReactNode }) {
         startTutorial("dashboard");
       }
     }
-  }, [user, window.location.pathname, hasTutorialForCurrentPage]);
+  }, [user, hasTutorialForCurrentPage, isOnboarding]);
+  
+  // Listen for pathname changes
+  useEffect(() => {
+    const handleLocationChange = () => {
+      const currentPath = window.location.pathname;
+      
+      if (currentPath === "/" || currentPath === "/dashboard") {
+        setHasTutorialForCurrentPage(true);
+      } else {
+        setHasTutorialForCurrentPage(false);
+      }
+    };
+    
+    // Call once on mount
+    handleLocationChange();
+    
+    // Listen for popstate events
+    window.addEventListener("popstate", handleLocationChange);
+    
+    return () => {
+      window.removeEventListener("popstate", handleLocationChange);
+    };
+  }, []);
 
   const startTutorial = (tutorialId: string) => {
     // Find the tutorial by ID

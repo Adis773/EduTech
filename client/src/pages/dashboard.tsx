@@ -109,7 +109,7 @@ export default function Dashboard() {
 
             {/* Stats Cards */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="stats-section mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {isLoadingStreak ? (
                   <div className="flex justify-center items-center h-40">
                     <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -170,7 +170,7 @@ export default function Dashboard() {
             {/* Continue Learning Section */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
               <h2 className="text-lg font-semibold text-neutral-800">Continue Learning</h2>
-              <div className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="courses-section mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {isLoadingCourses ? (
                   Array(3).fill(0).map((_, i) => (
                     <div key={i} className="flex justify-center items-center h-72">
@@ -245,7 +245,7 @@ export default function Dashboard() {
             </div>
 
             {/* AI Assistant Section */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 ai-assistant-section">
               <AIAssistant />
             </div>
 
@@ -254,7 +254,7 @@ export default function Dashboard() {
               <h2 className="text-lg font-semibold text-neutral-800">Recent Achievements</h2>
               <p className="mt-1 text-sm text-neutral-500">Keep up the great work!</p>
               
-              <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+              <div className="achievements-section mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
                 {isLoadingAchievements ? (
                   Array(6).fill(0).map((_, i) => (
                     <div key={i} className="flex justify-center items-center h-32">

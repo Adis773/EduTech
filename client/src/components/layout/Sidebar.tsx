@@ -62,7 +62,7 @@ export function Sidebar() {
   ];
 
   return (
-    <div className="md:flex w-64 flex-shrink-0 bg-white shadow-sm hidden">
+    <div className="sidebar md:flex w-64 flex-shrink-0 bg-white shadow-sm hidden">
       <div className="w-full">
         <div className="flex flex-col h-screen">
           <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
