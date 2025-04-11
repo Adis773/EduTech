@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/use-auth";
+import { Course, LearningStreak } from "@shared/schema";
 import { Header } from "@/components/layout/Header";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { StatsCard } from "@/components/dashboard/StatsCard";
@@ -70,7 +71,7 @@ export default function Dashboard() {
     queryKey: ["/api/user/streak"],
   });
 
-  const { data: recommendedCourses, isLoading: isLoadingRecommended } = useQuery({
+  const { data: recommendedCourses, isLoading: isLoadingRecommended } = useQuery<Course[]>({
     queryKey: ["/api/user/recommended-courses"],
   });
 

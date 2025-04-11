@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "wouter";
 import { useAuth } from "@/hooks/use-auth";
+import { useOnboarding } from "@/hooks/use-onboarding";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -10,15 +11,23 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Book, Bell, ChevronDown } from "lucide-react";
+import { Book, Bell, ChevronDown, LifeBuoy } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export function Header() {
   const { user, logoutMutation } = useAuth();
+  const { startTutorial, hasTutorialForCurrentPage } = useOnboarding();
   const [hasNotification, setHasNotification] = useState(true);
 
   const handleLogout = () => {
     logoutMutation.mutate();
+  };
+  
+  const handleStartTutorial = () => {
+    // Start the dashboard tutorial if we're on the dashboard
+    if (window.location.pathname === "/" || window.location.pathname === "/dashboard") {
+      startTutorial("dashboard");
+    }
   };
 
   return (
@@ -33,6 +42,16 @@ export function Header() {
           </div>
           <div className="flex items-center">
             <div className="flex items-center space-x-4">
+              {hasTutorialForCurrentPage && (
+                <button 
+                  className="relative inline-flex items-center px-2 py-2 rounded-full hover:bg-neutral-100"
+                  onClick={handleStartTutorial}
+                  title="Start tutorial"
+                >
+                  <LifeBuoy className="h-6 w-6 text-primary" />
+                </button>
+              )}
+              
               <button 
                 className="relative inline-flex items-center px-2 py-2 rounded-full hover:bg-neutral-100"
                 onClick={() => setHasNotification(false)}
@@ -76,6 +95,14 @@ export function Header() {
                   <DropdownMenuItem>
                     <Link href="/settings">Settings</Link>
                   </DropdownMenuItem>
+                  {hasTutorialForCurrentPage && (
+                    <DropdownMenuItem onClick={handleStartTutorial}>
+                      <div className="flex items-center">
+                        <LifeBuoy className="mr-2 h-4 w-4" />
+                        Start Tutorial
+                      </div>
+                    </DropdownMenuItem>
+                  )}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleLogout}>
                     Sign out
