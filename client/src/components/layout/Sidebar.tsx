@@ -10,7 +10,8 @@ import {
   Zap,
   BookOpen,
   Clock,
-  Briefcase
+  Briefcase,
+  LifeBuoy
 } from "lucide-react";
 
 export function Sidebar() {
@@ -41,6 +42,11 @@ export function Sidebar() {
       href: "/competitions", 
       label: "Competitions", 
       icon: <Shield className="flex-shrink-0 mr-3 h-5 w-5" /> 
+    },
+    { 
+      href: "/help", 
+      label: "Help & Tutorials", 
+      icon: <LifeBuoy className="flex-shrink-0 mr-3 h-5 w-5" /> 
     },
   ];
 

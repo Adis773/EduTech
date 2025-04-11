@@ -8,6 +8,7 @@ import Dashboard from "@/pages/dashboard";
 import Courses from "@/pages/courses";
 import Discover from "@/pages/discover";
 import Achievements from "@/pages/achievements";
+import HelpPage from "@/pages/help-page";
 import { AuthProvider } from "@/hooks/use-auth";
 import { OnboardingProvider } from "@/hooks/use-onboarding";
 import { TutorialPopover } from "@/components/onboarding/TutorialPopover";
@@ -22,6 +23,7 @@ function Router() {
       <ProtectedRoute path="/courses" component={Courses} />
       <ProtectedRoute path="/discover" component={Discover} />
       <ProtectedRoute path="/achievements" component={Achievements} />
+      <ProtectedRoute path="/help" component={HelpPage} />
       <Route component={NotFound} />
     </Switch>
   );

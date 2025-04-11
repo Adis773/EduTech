@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/use-auth";
-import { Course, LearningStreak } from "@shared/schema";
+import { Course } from "@shared/schema";
 import { Header } from "@/components/layout/Header";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { StatsCard } from "@/components/dashboard/StatsCard";
@@ -232,12 +232,12 @@ export default function Dashboard() {
                     <CourseCard
                       key={course.id}
                       id={course.id}
-                      title={course.title}
-                      description={course.description}
-                      category={course.category}
-                      imageUrl={course.imageUrl}
-                      rating={course.rating}
-                      reviewCount={course.reviewCount}
+                      title={course.title || ""}
+                      description={course.description || ""}
+                      category={course.category || ""}
+                      imageUrl={course.imageUrl || ""}
+                      rating={course.rating ?? undefined}
+                      reviewCount={course.reviewCount ?? undefined}
                       isRecommended={true}
                     />
                   ))
