@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -35,6 +35,8 @@ const registerSchema = z.object({
   firstName: z.string().min(2, "First name is required"),
   lastName: z.string().min(2, "Last name is required"),
   email: z.string().email("Please enter a valid email address"),
+  country: z.string().min(2, "Country is required"), // Added country field
+  preferredLanguage: z.string().optional(), // Made preferredLanguage optional
 }).refine(data => data.password === data.confirmPassword, {
   message: "Passwords do not match",
   path: ["confirmPassword"],
@@ -75,6 +77,9 @@ export default function AuthPage() {
       firstName: "",
       lastName: "",
       email: "",
+      country: "", // Added default value for country
+      preferredLanguage: "", // Added default value for preferredLanguage
+
     },
   });
 
@@ -109,13 +114,13 @@ export default function AuthPage() {
               <span className="ml-2 text-2xl font-bold text-neutral-800">EduTech AI</span>
             </div>
           </div>
-          
+
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="grid w-full grid-cols-2 mb-6">
               <TabsTrigger value="login">Login</TabsTrigger>
               <TabsTrigger value="register">Register</TabsTrigger>
             </TabsList>
-            
+
             <TabsContent value="login">
               <Card>
                 <CardHeader>
@@ -239,29 +244,24 @@ export default function AuthPage() {
 
                       <FormField
                         control={registerForm.control}
-                        name="preferredLanguage"
+                        name="country"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Preferred Language</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={field.value}>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select language" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="en">English</SelectItem>
-                                <SelectItem value="ru">Русский</SelectItem>
-                                <SelectItem value="kk">Қазақша</SelectItem>
-                                <SelectItem value="es">Español</SelectItem>
-                                <SelectItem value="fr">Français</SelectItem>
-                                <SelectItem value="de">Deutsch</SelectItem>
-                                <SelectItem value="cn">中文</SelectItem>
-                                <SelectItem value="jp">日本語</SelectItem>
-                              </SelectContent>
-                            </Select>
+                            <FormLabel>Country</FormLabel>
+                            <CountrySelector
+                              currentCountry={field.value}
+                              onCountryChange={(country) => {
+                                field.onChange(country);
+                                // Automatically set language based on country
+                                const languageMap = { kz: "kk", ru: "ru", us: "en", gb: "en" };
+                                registerForm.setValue("preferredLanguage", languageMap[country as keyof typeof languageMap]);
+                              }}
+                            />
                             <FormMessage />
                           </FormItem>
                         )}
                       />
+
 
                       <FormField
                         control={registerForm.control}
@@ -356,7 +356,7 @@ export default function AuthPage() {
             Personalized learning experiences powered by artificial intelligence, 
             designed to help you master any skill at your own pace.
           </p>
-          
+
           <div className="space-y-6">
             <div className="flex items-start space-x-4">
               <div className="flex-shrink-0 mt-1">
@@ -369,7 +369,7 @@ export default function AuthPage() {
                 </p>
               </div>
             </div>
-            
+
             <div className="flex items-start space-x-4">
               <div className="flex-shrink-0 mt-1">
                 <ShieldCheck className="h-6 w-6" />
@@ -381,7 +381,7 @@ export default function AuthPage() {
                 </p>
               </div>
             </div>
-            
+
             <div className="flex items-start space-x-4">
               <div className="flex-shrink-0 mt-1">
                 <Book className="h-6 w-6" />
