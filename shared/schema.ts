@@ -12,6 +12,7 @@ export const users = pgTable("users", {
   avatarUrl: text("avatar_url"),
   onboardingCompleted: boolean("onboarding_completed").default(false),
   createdAt: timestamp("created_at").defaultNow(),
+  preferredLanguage: text("preferred_language")
 });
 
 export const courses = pgTable("courses", {
@@ -63,6 +64,7 @@ export const insertUserSchema = createInsertSchema(users).pick({
   lastName: true,
   email: true,
   avatarUrl: true,
+  preferredLanguage: true,
 });
 
 export const insertCourseSchema = createInsertSchema(courses);

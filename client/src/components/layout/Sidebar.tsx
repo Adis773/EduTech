@@ -82,7 +82,7 @@ export function Sidebar() {
             <nav className="mt-5 px-2 space-y-1">
               {navItems.map((item) => (
                 <Link key={item.href} href={item.href}>
-                  <a
+                  <div
                     className={cn(
                       "flex items-center px-4 py-3 text-sm font-medium rounded-md group",
                       location === item.href
@@ -99,7 +99,7 @@ export function Sidebar() {
                       ),
                     })}
                     {item.label}
-                  </a>
+                  </div>
                 </Link>
               ))}
 
@@ -110,10 +110,10 @@ export function Sidebar() {
                 <div className="mt-2 space-y-1">
                   {learningPaths.map((path) => (
                     <Link key={path.href} href={path.href}>
-                      <a className="flex items-center px-4 py-2 text-sm font-medium text-neutral-600 rounded-md hover:bg-neutral-100 hover:text-neutral-800 group">
+                      <div className="flex items-center px-4 py-2 text-sm font-medium text-neutral-600 rounded-md hover:bg-neutral-100 hover:text-neutral-800 group">
                         <span className={`w-2 h-2 mr-3 rounded-full ${path.color}`}></span>
                         {path.label}
-                      </a>
+                      </div>
                     </Link>
                   ))}
                 </div>

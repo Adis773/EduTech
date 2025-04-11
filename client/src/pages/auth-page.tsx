@@ -217,6 +217,32 @@ export default function AuthPage() {
 
                       <FormField
                         control={registerForm.control}
+                        name="preferredLanguage"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Preferred Language</FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select language" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="en">English</SelectItem>
+                                <SelectItem value="ru">Русский</SelectItem>
+                                <SelectItem value="kk">Қазақша</SelectItem>
+                                <SelectItem value="es">Español</SelectItem>
+                                <SelectItem value="fr">Français</SelectItem>
+                                <SelectItem value="de">Deutsch</SelectItem>
+                                <SelectItem value="cn">中文</SelectItem>
+                                <SelectItem value="jp">日本語</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={registerForm.control}
                         name="email"
                         render={({ field }) => (
                           <FormItem>
