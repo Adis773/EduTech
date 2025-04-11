@@ -17,6 +17,7 @@ type UserWithoutPassword = {
   lastName: string;
   email: string;
   avatarUrl?: string;
+  onboardingCompleted: boolean;
   createdAt: Date;
 };
 
