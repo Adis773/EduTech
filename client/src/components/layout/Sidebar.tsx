@@ -8,6 +8,7 @@ import {
   Award, 
   Shield, 
   Zap,
+  Settings,
   BookOpen,
   Clock,
   Briefcase,
@@ -47,6 +48,11 @@ export function Sidebar() {
       href: "/help", 
       label: "Help & Tutorials", 
       icon: <LifeBuoy className="flex-shrink-0 mr-3 h-5 w-5" /> 
+    },
+    { 
+      href: "/settings", 
+      label: "Settings", 
+      icon: <Settings className="flex-shrink-0 mr-3 h-5 w-5" /> 
     },
   ];
 

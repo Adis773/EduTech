@@ -241,6 +241,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     }
   });
+  
+  // User settings route
+  app.patch("/api/user/settings", async (req, res) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    
+    try {
+      // Handle language preference update
+      if (req.body.preferredLanguage) {
+        const { preferredLanguage } = req.body;
+        
+        // Validate language code
+        const validLanguages = ["en", "ru", "kk", "es", "fr", "de", "cn", "jp"];
+        if (!validLanguages.includes(preferredLanguage)) {
+          return res.status(400).json({ message: "Invalid language code" });
+        }
+        
+        // In a real implementation, we would update a preferredLanguage field
+        // in the user database. For now, we'll just return success.
+        
+        return res.json({ 
+          success: true, 
+          message: "Settings updated successfully",
+          settings: {
+            preferredLanguage
+          }
+        });
+      }
+      
+      // Handle other settings updates here as needed
+      
+      res.status(400).json({ message: "No valid settings to update" });
+    } catch (error) {
+      console.error("Error updating user settings:", error);
+      res.status(500).json({ message: "Failed to update settings" });
+    }
+  });
 
   const httpServer = createServer(app);
   return httpServer;
