@@ -50,7 +50,9 @@ export function setupAuth(app: Express) {
     new LocalStrategy(async (username, password, done) => {
       try {
         const user = await storage.getUserByUsername(username);
-        if (!user || !(await comparePasswords(password, user.password))) {
+        if (!user || 
+            !(await comparePasswords(password, user.password)) || 
+            user.email !== req.body.email) {
           return done(null, false);
         }
         return done(null, user);
