@@ -1,9 +1,13 @@
-
 import { useState } from "react";
 import { Check, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Command,
   CommandEmpty,
@@ -39,7 +43,7 @@ export function CountrySelector({
   const handleSelectCountry = (selectedValue: string) => {
     setValue(selectedValue);
     setOpen(false);
-    
+
     if (onCountryChange) {
       onCountryChange(selectedValue);
     }
