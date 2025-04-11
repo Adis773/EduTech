@@ -52,7 +52,7 @@ const defaultContext: AuthContextType = {
   registerMutation: {} as UseMutationResult<UserWithoutPassword, Error, RegisterData>
 };
 
-export const AuthContext = createContext<AuthContextType | null>(null);
+export const AuthContext = createContext<AuthContextType>(defaultContext);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const { toast } = useToast();
