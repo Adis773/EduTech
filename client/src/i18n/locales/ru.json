@@ -1,0 +1,20 @@
+
+{
+  "common": {
+    "login": "Войти",
+    "register": "Регистрация",
+    "email": "Почта",
+    "password": "Пароль",
+    "username": "Имя пользователя",
+    "firstName": "Имя",
+    "lastName": "Фамилия"
+  },
+  "nav": {
+    "dashboard": "Главная",
+    "courses": "Курсы",
+    "discover": "Обзор",
+    "achievements": "Достижения",
+    "settings": "Настройки",
+    "help": "Помощь"
+  }
+}

@@ -44,6 +44,9 @@ export function LanguageSelector({
     setValue(selectedValue);
     setOpen(false);
     
+    localStorage.setItem('language', selectedValue);
+    window.location.reload();
+    
     if (onLanguageChange) {
       onLanguageChange(selectedValue);
     }
