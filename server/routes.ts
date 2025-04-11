@@ -197,6 +197,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Onboarding status update
+  app.patch("/api/user/onboarding", async (req, res) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    
+    try {
+      const userId = req.user!.id;
+      const { completed } = req.body;
+      
+      if (typeof completed !== 'boolean') {
+        return res.status(400).json({ message: "Invalid completed value" });
+      }
+      
+      const updatedUser = await storage.updateUserOnboardingStatus(userId, completed);
+      res.json({ onboardingCompleted: updatedUser.onboardingCompleted });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to update onboarding status" });
+    }
+  });
+
   // AI Assistant route
   app.post("/api/ai/assistant", async (req, res) => {
     if (!req.isAuthenticated()) {

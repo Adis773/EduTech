@@ -28,6 +28,7 @@ export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
+  updateUserOnboardingStatus(userId: number, completed: boolean): Promise<User>;
 
   // Course methods
   getCourse(id: number): Promise<Course | undefined>;
@@ -217,7 +218,12 @@ export class MemStorage implements IStorage {
   async createUser(insertUser: InsertUser): Promise<User> {
     const id = this.userCurrentId++;
     const currentTime = new Date();
-    const user: User = { ...insertUser, id, createdAt: currentTime };
+    const user: User = { 
+      ...insertUser, 
+      id, 
+      onboardingCompleted: false,
+      createdAt: currentTime 
+    };
     this.users.set(id, user);
     
     // Initialize learning streak for new user
@@ -230,6 +236,19 @@ export class MemStorage implements IStorage {
     });
     
     return user;
+  }
+
+  async updateUserOnboardingStatus(userId: number, completed: boolean): Promise<User> {
+    const user = this.users.get(userId);
+    if (!user) throw new Error(`User not found: ${userId}`);
+    
+    const updatedUser = {
+      ...user,
+      onboardingCompleted: completed
+    };
+    
+    this.users.set(userId, updatedUser);
+    return updatedUser;
   }
 
   // Course methods
