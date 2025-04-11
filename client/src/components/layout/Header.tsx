@@ -37,7 +37,7 @@ export function Header() {
           <div className="flex items-center">
             <div className="flex-shrink-0 flex items-center">
               <Book className="h-8 w-auto text-primary" />
-              <span className="ml-2 text-xl font-bold text-neutral-800">EduTech AI</span>
+              <span className="ml-2 text-xl font-bold text-neutral-800">SmartLearnix</span>
             </div>
           </div>
           <div className="flex items-center">

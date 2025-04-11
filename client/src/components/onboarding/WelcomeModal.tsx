@@ -23,7 +23,7 @@ export function WelcomeModal() {
     <Dialog open={true}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className="text-2xl">Welcome to EduTech!</DialogTitle>
+          <DialogTitle className="text-2xl">Welcome to SmartLearnix!</DialogTitle>
           <DialogDescription>
             We're excited to have you join our learning platform. Would you like a quick tour to help you get started?
           </DialogDescription>

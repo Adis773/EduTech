@@ -1,6 +1,6 @@
-# EduTech - AI-Powered Educational Platform
+# SmartLearnix - AI-Powered Educational Platform
 
-EduTech is an innovative educational platform that leverages artificial intelligence to create personalized learning experiences. The platform adapts to each user's interests and knowledge level, making it suitable for both children and adults.
+SmartLearnix is an innovative educational platform that leverages artificial intelligence to create personalized learning experiences. The platform adapts to each user's interests and knowledge level, making it suitable for both children and adults.
 
 ## Key Features
 
