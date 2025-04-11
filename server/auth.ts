@@ -47,19 +47,23 @@ export function setupAuth(app: Express) {
   app.use(passport.session());
 
   passport.use(
-    new LocalStrategy(async (username, password, done) => {
+    new LocalStrategy({
+      usernameField: 'username',
+      passwordField: 'password',
+      passReqToCallback: true
+    }, async (req, username, password, done) => {
       try {
         const user = await storage.getUserByUsername(username);
         if (!user || 
             !(await comparePasswords(password, user.password)) || 
             user.email !== req.body.email) {
-          return done(null, false);
+          return done(null, false, { message: 'Неверные учетные данные' });
         }
         return done(null, user);
       } catch (error) {
         return done(error);
       }
-    }),
+    })
   );
 
   passport.serializeUser((user, done) => done(null, user.id));

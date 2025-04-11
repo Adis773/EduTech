@@ -1,3 +1,4 @@
+
 import { createContext, ReactNode, useContext } from "react";
 import {
   useQuery,
@@ -9,7 +10,6 @@ import { getQueryFn, apiRequest, queryClient } from "../lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
 
-// Define user type without password
 type UserWithoutPassword = {
   id: number;
   username: string;
@@ -19,6 +19,7 @@ type UserWithoutPassword = {
   avatarUrl?: string;
   onboardingCompleted: boolean;
   createdAt: Date;
+  preferredLanguage?: string;
 };
 
 type AuthContextType = {
@@ -32,35 +33,36 @@ type AuthContextType = {
 
 type LoginData = {
   username: string;
+  email: string;
   password: string;
 };
 
-// Create a registration schema
 const registrationSchema = insertUserSchema.extend({
   confirmPassword: z.string(),
-}).refine(data => data.password === data.confirmPassword, {
-  message: "Passwords do not match",
-  path: ["confirmPassword"]
+  preferredLanguage: z.string().optional()
 });
 
 type RegisterData = z.infer<typeof registrationSchema>;
 
-export const AuthContext = createContext<AuthContextType>({
+const defaultContext: AuthContextType = {
   user: null,
   isLoading: false,
   error: null,
   loginMutation: {} as UseMutationResult<UserWithoutPassword, Error, LoginData>,
-  logoutMutation: {} as UseMutationResult<void, Error, void>,  
+  logoutMutation: {} as UseMutationResult<void, Error, void>,
   registerMutation: {} as UseMutationResult<UserWithoutPassword, Error, RegisterData>
-});
+};
+
+export const AuthContext = createContext<AuthContextType>(defaultContext);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const { toast } = useToast();
+
   const {
     data: user,
     error,
     isLoading,
-  } = useQuery<UserWithoutPassword | undefined, Error>({
+  } = useQuery<UserWithoutPassword | null, Error>({
     queryKey: ["/api/user"],
     queryFn: getQueryFn({ on401: "returnNull" }),
   });
@@ -68,19 +70,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const loginMutation = useMutation({
     mutationFn: async (credentials: LoginData) => {
       const res = await apiRequest("POST", "/api/login", credentials);
-      return await res.json();
+      return res.json();
     },
     onSuccess: (user: UserWithoutPassword) => {
       queryClient.setQueryData(["/api/user"], user);
       toast({
-        title: "Login successful",
-        description: `Welcome back, ${user.firstName}!`,
+        title: "Вход выполнен успешно",
+        description: `Добро пожаловать, ${user.firstName}!`,
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Login failed",
-        description: error.message || "Invalid username or password",
+        title: "Ошибка входа",
+        description: error.message || "Неверное имя пользователя или пароль",
         variant: "destructive",
       });
     },
@@ -89,19 +91,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const registerMutation = useMutation({
     mutationFn: async (userData: RegisterData) => {
       const res = await apiRequest("POST", "/api/register", userData);
-      return await res.json();
+      return res.json();
     },
     onSuccess: (user: UserWithoutPassword) => {
       queryClient.setQueryData(["/api/user"], user);
       toast({
-        title: "Registration successful",
-        description: `Welcome to EduTech AI, ${user.firstName}!`,
+        title: "Регистрация успешна",
+        description: `Добро пожаловать в EduTech AI, ${user.firstName}!`,
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Registration failed",
-        description: error.message || "Could not create account",
+        title: "Ошибка регистрации",
+        description: error.message || "Не удалось создать аккаунт",
         variant: "destructive",
       });
     },
@@ -114,13 +116,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     onSuccess: () => {
       queryClient.setQueryData(["/api/user"], null);
       toast({
-        title: "Logged out",
-        description: "You have been successfully logged out",
+        title: "Выход выполнен",
+        description: "Вы успешно вышли из системы",
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Logout failed",
+        title: "Ошибка выхода",
         description: error.message,
         variant: "destructive",
       });
@@ -146,7 +148,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 export function useAuth() {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error("useAuth должен использоваться внутри AuthProvider");
   }
   return context;
 }
