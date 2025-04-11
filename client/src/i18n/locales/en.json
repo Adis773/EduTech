@@ -1,0 +1,20 @@
+
+{
+  "common": {
+    "login": "Login",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "username": "Username",
+    "firstName": "First Name",
+    "lastName": "Last Name"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "courses": "Courses", 
+    "discover": "Discover",
+    "achievements": "Achievements",
+    "settings": "Settings",
+    "help": "Help"
+  }
+}

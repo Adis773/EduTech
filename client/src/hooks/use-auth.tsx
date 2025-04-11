@@ -1,4 +1,3 @@
-
 import { createContext, ReactNode, useContext } from "react";
 import {
   useQuery,
@@ -53,7 +52,7 @@ const defaultContext: AuthContextType = {
   registerMutation: {} as UseMutationResult<UserWithoutPassword, Error, RegisterData>
 };
 
-export const AuthContext = createContext<AuthContextType>(defaultContext);
+export const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const { toast } = useToast();
