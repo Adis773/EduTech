@@ -1,3 +1,4 @@
+
 import { createContext, ReactNode, useContext } from "react";
 import {
   useQuery,
@@ -57,7 +58,7 @@ export const AuthContext = createContext<AuthContextType>(defaultContext);
 export function useAuth() {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error("useAuth должен использоваться внутри AuthProvider");
   }
   return context;
 }
@@ -104,7 +105,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       queryClient.setQueryData(["/api/user"], user);
       toast({
         title: "Регистрация успешна",
-        description: `Добро пожаловать в EduTech AI, ${user.firstName}!`,
+        description: `Добро пожаловать в SmartLearnix, ${user.firstName}!`,
       });
     },
     onError: (error: Error) => {
@@ -150,12 +151,4 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       {children}
     </AuthContext.Provider>
   );
-}
-
-export function useAuth() {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuth должен использоваться внутри AuthProvider");
-  }
-  return context;
 }
